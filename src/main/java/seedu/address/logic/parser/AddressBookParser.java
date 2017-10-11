@@ -96,7 +96,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case WHY:
-            return new WhyCommand();
+            return new WhyCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
