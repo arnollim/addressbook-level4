@@ -2,9 +2,15 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
+
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ReadOnlyPerson;
+
 
 
 /**
@@ -23,17 +29,26 @@ public class WhyCommand extends Command {
 
     public static final String SHOWING_WHY_MESSAGE = "Because %1$s is cool";
 
-    private final Index targetindex;
+    private final Index targetIndex;
 
     public WhyCommand(Index targetIndex){
         requireNonNull(targetIndex);
 
-        this.targetindex = targetIndex;
+        this.targetIndex = targetIndex;
     }
 
     @Override
     public CommandResult execute() {
         //EventsCenter.getInstance().post(new ShowHelpRequestEvent());
-        return new CommandResult(SHOWING_WHY_MESSAGE);
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            //throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        return new CommandResult(String.format(SHOWING_WHY_MESSAGE, personToDelete));
     }
 }
