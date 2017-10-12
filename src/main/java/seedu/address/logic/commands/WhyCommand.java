@@ -10,6 +10,7 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Reason;
 import seedu.address.model.person.Name;
 
 
@@ -28,7 +29,7 @@ public class WhyCommand extends Command {
     public static final String MESSAGE_WHY_REMARK_SUCCESS = "Added remark to Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    public static final String SHOWING_WHY_MESSAGE = "Because %1$s\n is cool";
+    public static final String SHOWING_WHY_MESSAGE = "Because %1$s %2$s";
 
     private final Index targetIndex;
 
@@ -49,7 +50,8 @@ public class WhyCommand extends Command {
         }
 
         ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        Name a = personToDelete.getName();
-        return new CommandResult(String.format(SHOWING_WHY_MESSAGE, a));
+        Name name = personToDelete.getName();
+        Reason reason = personToDelete.getReason();
+        return new CommandResult(String.format(SHOWING_WHY_MESSAGE, name, reason));
     }
 }
