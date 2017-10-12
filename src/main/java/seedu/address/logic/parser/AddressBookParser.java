@@ -170,8 +170,8 @@ public class AddressBookParser {
                 return CommandType.UNDO;
             }
         }
-        for (String word: WhyCommand.COMMAND_WORDS){
-            if(commandWord.contentEquals(word)) {
+        for (String word: WhyCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
                 return CommandType.WHY;
             }
         }

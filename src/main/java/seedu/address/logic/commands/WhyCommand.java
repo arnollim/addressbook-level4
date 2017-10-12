@@ -4,14 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Reason;
-import seedu.address.model.person.Name;
 
 
 
@@ -33,7 +29,7 @@ public class WhyCommand extends Command {
 
     private final Index targetIndex;
 
-    public WhyCommand(Index targetIndex){
+    public WhyCommand(Index targetIndex) {
         requireNonNull(targetIndex);
 
         this.targetIndex = targetIndex;

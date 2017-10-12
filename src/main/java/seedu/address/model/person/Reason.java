@@ -4,6 +4,9 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/**
+ * Represents a Person's reason for "why" in the address book.
+ */
 public class Reason {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
