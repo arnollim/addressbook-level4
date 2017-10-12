@@ -10,6 +10,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.WhyCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * WhyCommandParser: Adapted from DeleteCommandParser due to similarities
+ */
 public class WhyCommandParser implements Parser<WhyCommand> {
     /**
       * Parses the given {@code String} of arguments in the context of the ReasonCommand
