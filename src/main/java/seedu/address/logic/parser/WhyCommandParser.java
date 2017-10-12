@@ -12,10 +12,10 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 public class WhyCommandParser implements Parser<WhyCommand> {
     /**
-          * Parses the given {@code String} of arguments in the context of the ReasonCommand
-          * and returns an RemarkCommand object for execution.
-          * @throws ParseException if the user input does not conform the expected format
-          */
+      * Parses the given {@code String} of arguments in the context of the ReasonCommand
+      * and returns an RemarkCommand object for execution.
+      * @throws ParseException if the user input does not conform the expected format
+      */
     public WhyCommand parse(String args) throws ParseException {
         try {
             Index index = ParserUtil.parseIndex(args);

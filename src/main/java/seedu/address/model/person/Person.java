@@ -104,7 +104,9 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    public void setReason(Reason reason) { this.reason.set(requireNonNull(reason)); }
+    public void setReason(Reason reason) {
+        this.reason.set(requireNonNull(reason));
+    }
 
     @Override
     public ObjectProperty<Reason> reasonProperty() {
