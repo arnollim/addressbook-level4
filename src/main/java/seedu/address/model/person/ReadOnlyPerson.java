@@ -69,6 +69,7 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
+    //@@author arnollim
     default String getAsParagraph() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
@@ -84,6 +85,7 @@ public interface ReadOnlyPerson {
         getTags().forEach(builder::append);
         return builder.toString();
     }
+    //@@author
 
 
     String getDetailByPrefix(Prefix prefix);
