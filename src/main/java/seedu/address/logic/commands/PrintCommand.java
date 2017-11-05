@@ -56,7 +56,7 @@ public class PrintCommand extends Command {
         int personIndex = 1;
         for (ReadOnlyPerson person: lastShownList) {
             String entry = personIndex + ". " + person.getAsParagraph();
-            lines.add(entry + "\n");
+            lines.add("\n" + entry + "\n");
 
             UniqueLifeInsuranceList insurances = person.getLifeInsurances();
             for (ReadOnlyInsurance insurance: insurances) {
