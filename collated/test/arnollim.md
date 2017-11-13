@@ -9,7 +9,7 @@ public class PrintCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_valid_fileName_success () {
+    public void execute_print_success () {
         String fileName = "fileName";
         PrintCommand printCommand = prepareCommand(fileName);
 
@@ -91,6 +91,31 @@ public class WhyCommandTest {
         WhyCommand whyCommand = new WhyCommand(index);
         whyCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return whyCommand;
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/WhyCommandParserTest.java
+``` java
+/**
+ * WhyCommandParserTest tests the validity of the indices provided to WhyCommand
+ */
+public class WhyCommandParserTest {
+
+    private WhyCommandParser parser = new WhyCommandParser();
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        String invalidIndex = "abc";
+        String feedbackToUser = String.format(MESSAGE_INVALID_COMMAND_FORMAT, WhyCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, invalidIndex, feedbackToUser);
+    }
+
+    @Test
+    public void parse_invalidIndex_throwsParseException() {
+        String invalidIndex = "0";
+        String feedbackToUser = String.format(MESSAGE_INVALID_COMMAND_FORMAT, WhyCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, invalidIndex, feedbackToUser);
     }
 
 }
