@@ -6,7 +6,7 @@
 == Load Sample data
 
 ** Please follow the instructions given below to load the sample data:- +
-** 1) Download the SampleData.xml file from here[] and rename it to addressbook.xml. +
+** 1) Download the SampleData.xml file from [https://github.com/CS2103AUG2017-T13-B1/main/releases[here]] and rename it to addressbook.xml. +
 ** 2) Click on the LISA.jar file to run the application. +
 ** 3) Type in a dummy command eg. "add n/LISA"
 ** 4) Close the app. You will notice that the `data` folder is created. +
@@ -41,7 +41,7 @@
 ****
 
 === LISA is alphabetically sorted. Add Command places newly add persons alphabetically in the list
-*Notice that once LISA is loaded, the contact list is already sorted alphabetically*
+*Notice that once LISA is loaded, the contact list is already sorted alphabetically* +
 Input: +
 `add n/Aaron` +
 `add n/Mandy` +
@@ -73,8 +73,8 @@ Expected output: Madonna contact is added with no details.
 Input: `f Madonna` +
 Expected output: Madonna contact is filtered.
 
-Input: `e 1` +
-Expected output:
+Input: `e 1 g/f` +
+Expected output: Gender female is added to Madonna contact.
 
 Input: `sos` +
 Expected output: Help window is called
@@ -137,20 +137,20 @@ Cursor should also be placed at the next empty prefix.
 Input: `ali n/Life Insurance o/ i/ b/ pr/ sd/ ed/ c/`
 Expected output: Cursor should be placed at the next empty field.
 
-Input: `ali n/Term Life o/Madonna i/Madonna b/Aaron Agant pr/1000 sd/17 11 2017 ed/17 11 2018 c/MadonnaTermLife` +
+Input: `ali n/Term Life o/Madonna i/Madonna b/Not in Lisa pr/1000 sd/17 11 2017 ed/17 11 2018 c/MadonnaTermLife` +
 Expected output: Term Life insurance is added with all the details filled
 
 Input: `find Madonna` +
 Expected output: Madonna is found in the person list
 
-Input: `select Madonna` +
+Input: `select 1` +
 Expected output: Madonna's profile is displayed in the middle. Notice it contains one insurance called "Term Life"
 
 Input: Use the mouse to click on "Term Life" +
 Expected output: The life insurance Term Life is displayed in the middle. Notice it contains three person names who is involved in the insurance.
 
-Input: Use the mouse to click on "Aaron Agant" +
-Expected output: Aaron's profile is displayed in the middle. Notice it contains one insurance called "Term Life"
+Input: Use the mouse to click on "Not in Lisa" +
+Expected output: Not in Lisa's profile is displayed in the middle. Notice it says "This person does not exist in Lisa".
 
 
 === Why
@@ -206,18 +206,14 @@ Undo success!
 Undone Command: add aaa123 Phone: Email: Address: DateOfBirth: Gender:  Tags:
 
 Input:
-`clear`
+`clear` +
+Expected output: Lisa is cleared.
+
+Input:
 `undo` +
 Expected output:
 Undo success!
 Undone Command: clear
-
-=== ‘addli’ command for adding life insurances
-
-Input: `e 1 d/1 1 12` +
-Expected output: Date of birth is changed to `01 Jan 2012`
-
-
 
 === Tab between commandbox and searchbox
 
