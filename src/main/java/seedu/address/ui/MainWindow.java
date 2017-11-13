@@ -38,8 +38,8 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final String COMMANDBOX_TEXTFIELD_ID = "#commandTextField";
     private static final String SEARCHBOX_TEXTFIELD_ID = "#searchTextField";
-    private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 600;
+    private static final int MIN_HEIGHT = 1280;
+    private static final int MIN_WIDTH = 720;
 
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
