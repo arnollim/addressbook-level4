@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Albus Percival Wulfric Brian Dumbledore</name>
+        <phone>92831448</phone>
+        <email>wizards@example.com</email>
+        <address>Hogwarts</address>
+        <dob>30 Jun 1981</dob>
+        <gender>MALE</gender>
+        <tagged>weird</tagged>
+        <tagged>Headmaster</tagged>
+        <tagged>crazy</tagged>
+        <tagged>wizard</tagged>
+    </persons>
+    <persons>
+        <name>Arnol Lim</name>
+        <phone>90831238</phone>
+        <email></email>
+        <address>NUS</address>
+        <dob>03 Dec 1994</dob>
+        <gender>MALE</gender>
+        <tagged>best</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <dob>28 Jan 1997</dob>
+        <gender>MALE</gender>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <dob>29 Jan 1997</dob>
+        <gender>FEMALE</gender>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>Daenerys Targaryen</name>
+        <phone></phone>
+        <email></email>
+        <address></address>
+        <dob></dob>
+        <gender>FEMALE</gender>
+        <tagged>wife</tagged>
+        <tagged>dragon</tagged>
+        <tagged>cousin</tagged>
+    </persons>
+    <persons>
+        <name>Daniel Drudley</name>
+        <phone>92141082</phone>
+        <email>dd@example.com</email>
+        <address>71 Pilgrim Avenue Chevy Chase, MD 20815</address>
+        <dob>02 Mar 2004</dob>
+        <gender>MALE</gender>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <dob>30 Jan 1997</dob>
+        <gender>MALE</gender>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Ellen Degeneres</name>
+        <phone>21091428532</phone>
+        <email>ellen@example.com</email>
+        <address></address>
+        <dob></dob>
+        <gender>FEMALE</gender>
+        <tagged>RichAF</tagged>
+        <tagged>host</tagged>
+    </persons>
+    <persons>
+        <name>Gordon Ramsey</name>
+        <phone>21091481009</phone>
+        <email>angrycook@example.com</email>
+        <address>Best Restaurant Ever</address>
+        <dob>09 Sep 1986</dob>
+        <gender>MALE</gender>
+        <tagged>chef</tagged>
+        <tagged>angry</tagged>
+    </persons>
+    <persons>
+        <name>Harry Potter</name>
+        <phone>98733402</phone>
+        <email>hp@example.com</email>
+        <address>Hogwarts</address>
+        <dob></dob>
+        <gender>MALE</gender>
+        <tagged>wizard</tagged>
+    </persons>
+    <persons>
+        <name>Hermione</name>
+        <phone>83714202</phone>
+        <email>hgranger@example.com</email>
+        <address>Hogwarts</address>
+        <dob></dob>
+        <gender>FEMALE</gender>
+        <tagged>wizard</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <dob>31 Jan 1997</dob>
+        <gender>MALE</gender>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Jaryl Tan</name>
+        <phone>93843201</phone>
+        <email>jaryltan94@gmail.com</email>
+        <address>Blk 299 Yishun Ave 5 #08-03</address>
+        <dob>11 Oct 1994</dob>
+        <gender>MALE</gender>
+        <tagged>CompSci</tagged>
+        <tagged>ChemEng</tagged>
+        <tagged>best</tagged>
+    </persons>
+    <persons>
+        <name>Jon Snow</name>
+        <phone></phone>
+        <email></email>
+        <address></address>
+        <dob>11 Jan 2016</dob>
+        <gender>MALE</gender>
+    </persons>
+    <persons>
+        <name>Juxarius Juxcity</name>
+        <phone>82402902</phone>
+        <email>juxarius@example.com</email>
+        <address></address>
+        <dob></dob>
+        <gender>MALE</gender>
+        <tagged>weird</tagged>
+        <tagged>anonymous</tagged>
+    </persons>
+    <persons>
+        <name>Mary Jane</name>
+        <phone>98765432</phone>
+        <email>maryjane@example.com</email>
+        <address>Mary street, block 123</address>
+        <dob>05 May 1990</dob>
+        <gender>FEMALE</gender>
+    </persons>
+    <persons>
+        <name>Oscar Wang</name>
+        <phone>209810290</phone>
+        <email></email>
+        <address></address>
+        <dob>04 Nov 1996</dob>
+        <gender>MALE</gender>
+        <tagged>CompSci</tagged>
+        <tagged>best</tagged>
+    </persons>
+    <persons>
+        <name>Pujitha Desiraju</name>
+        <phone>93845702</phone>
+        <email></email>
+        <address></address>
+        <dob></dob>
+        <gender>FEMALE</gender>
+        <tagged>best</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <dob>01 Feb 1997</dob>
+        <gender>MALE</gender>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Veronica Bestly</name>
+        <phone>94120810</phone>
+        <email></email>
+        <address>Girl next block</address>
+        <dob></dob>
+        <gender>FEMALE</gender>
+        <tagged>angry</tagged>
+        <tagged>hot</tagged>
+    </persons>
+    <tags>RichAF</tags>
+    <tags>cook</tags>
+    <tags>wife</tags>
+    <tags>chef</tags>
+    <tags>ChemEng</tags>
+    <tags>best</tags>
+    <tags>neighbours</tags>
+    <tags>dragon</tags>
+    <tags>angry</tags>
+    <tags>hot</tags>
+    <tags>cousin</tags>
+    <tags>friends</tags>
+    <tags>weird</tags>
+    <tags>CompSci</tags>
+    <tags>Headmaster</tags>
+    <tags>colleagues</tags>
+    <tags>host</tags>
+    <tags>classmates</tags>
+    <tags>anonymous</tags>
+    <tags>crazy</tags>
+    <tags>wizard</tags>
+    <tags>family</tags>
+    <lifeInsuranceMap>
+        <entry>
+            <key>ea91ce18-4a4f-415a-a688-62621c241108</key>
+            <value>
+                <id>ea91ce18-4a4f-415a-a688-62621c241108</id>
+                <insuranceName>Cheap Term Life for Peasants</insuranceName>
+                <owner>Alex Yeoh</owner>
+                <insured>Oscar Wang</insured>
+                <beneficiary>Bernice Yu</beneficiary>
+                <premium>500.0</premium>
+                <contractFileName>AlexCheapTermLife.pdf</contractFileName>
+                <signingDate>01 Jan 2017</signingDate>
+                <expiryDate>01 Jan 2047</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>067e6162-3b6f-4ae2-a171-2470b63dff00</key>
+            <value>
+                <id>067e6162-3b6f-4ae2-a171-2470b63dff00</id>
+                <insuranceName>Normal Term Life for Commoners</insuranceName>
+                <owner>Alex Yeoh</owner>
+                <insured>Bernice Yu</insured>
+                <beneficiary>Charlotte Oliveiro</beneficiary>
+                <premium>1500.0</premium>
+                <contractFileName>AlexNormalTermLife.pdf</contractFileName>
+                <signingDate>25 Dec 2017</signingDate>
+                <expiryDate>25 Dec 2047</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>a5d63bc4-a975-4994-bb19-d73f8dfc8f97</key>
+            <value>
+                <id>a5d63bc4-a975-4994-bb19-d73f8dfc8f97</id>
+                <insuranceName>Normal Term Life for Commoners</insuranceName>
+                <owner>Harry Potter</owner>
+                <insured>Ginny Weasley</insured>
+                <beneficiary>David Li</beneficiary>
+                <premium>1500.0</premium>
+                <contractFileName>HarryNormalTermLife.pdf</contractFileName>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2047</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</key>
+            <value>
+                <id>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</id>
+                <insuranceName>Expensive Term Life for Royalties</insuranceName>
+                <owner>John Doe</owner>
+                <insured>Roy Balakrishnan</insured>
+                <beneficiary>Mary Jane</beneficiary>
+                <premium>2500.0</premium>
+                <contractFileName>JohnExpensiveTermLife.pdf</contractFileName>
+                <signingDate>30 Nov 2017</signingDate>
+                <expiryDate>30 Nov 2047</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>366deead-a90f-42fa-8fb8-f9e829315fc7</key>
+            <value>
+                <id>366deead-a90f-42fa-8fb8-f9e829315fc7</id>
+                <insuranceName>Term Life AXA</insuranceName>
+                <owner>Ellen Degeneres</owner>
+                <insured>Ellen Degeneres</insured>
+                <beneficiary>Mary Jane</beneficiary>
+                <premium>3000.0</premium>
+                <contractFileName>EllenTermLifeAXA.pdf</contractFileName>
+                <signingDate>17 Nov 2017</signingDate>
+                <expiryDate>17 Nov 2037</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>97433ca6-ca24-4bb1-9a87-dca4c32012df</key>
+            <value>
+                <id>97433ca6-ca24-4bb1-9a87-dca4c32012df</id>
+                <insuranceName>Whole Life Great Eastern</insuranceName>
+                <owner>Hermione</owner>
+                <insured>Hermione</insured>
+                <beneficiary>Juxarius Juxcity</beneficiary>
+                <premium>8500.0</premium>
+                <contractFileName>HermioneWholeLife.pdf</contractFileName>
+                <signingDate>01 Nov 2017</signingDate>
+                <expiryDate>01 Nov 2117</expiryDate>
+            </value>
+        </entry>
+        <entry>
+            <key>c77ca792-fbe9-44bc-b43b-f0423d0e1fc8</key>
+            <value>
+                <id>c77ca792-fbe9-44bc-b43b-f0423d0e1fc8</id>
+                <insuranceName>Whole Life Protection Plan</insuranceName>
+                <owner>Harry Potter</owner>
+                <insured>Oscar Wang</insured>
+                <beneficiary>Oscar Wang</beneficiary>
+                <premium>7000.0</premium>
+                <contractFileName>HarryWholeLife.pdf</contractFileName>
+                <signingDate>25 Dec 2017</signingDate>
+                <expiryDate>25 Dec 2117</expiryDate>
+            </value>
+        </entry>
+    </lifeInsuranceMap>
+</addressbook>
