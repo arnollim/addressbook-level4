@@ -826,7 +826,7 @@ The rest of the execution then, follows closely to the case where the command is
 `since v1.3`
 
 image::LifeInsuranceClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Components related to LifeInsurance_
+_Figure 3.10.1 : Structure of the Components related to LifeInsurance_
 
 The `LifeInsurance`,
 
@@ -868,7 +868,7 @@ A person is involved in a life insurance if he/she is an owner, insured, or bene
 
 
 image::XmlAdaptedLifeInsuranceClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Components related to XmlAdaptedLifeInsurance_
+_Figure 3.10.2 : Structure of the Components related to XmlAdaptedLifeInsurance_
 
 The `XmlAdaptedLifeInsurance`
 
@@ -917,7 +917,7 @@ second method is `syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceM
 
 The first method ensures that the three `InsurancePerson` objects (owner, insured, and beneficiary) of every `LifeInsurance` in the master map links to its corresponding `Person` object if it exists in the persons list.
 In addition, it also populates the list of insurance ids `List<UUID>` in every `Person` object with id of the life insurance he/her is involved in.
-It is implemented in this way:
+It is implemented in the following way:
 
 [source,java]
 ----
@@ -949,7 +949,7 @@ Because `Person` objects are identified by `Name` and stored in a list,
 for every `LifeInsurance` object we have to iterate through the entire list of persons to check if the name of the `Person` object matches with the name of the three `InsurancePerson` objects.
 
 The second method ensures that every `Person` in the master list contains the correct list of `LifeInsurance` objects corresponding to his/her list of insurance ids `List<UUID>`.
-It is implemented in this way:
+It is implemented in the following way:
 
 [source,java]
 ----
@@ -992,14 +992,21 @@ The internal list have to be synchronized when data in the map changes. +
 === Add Life Insurance Command:
 `since v1.4`
 
-The following sequence diagram shows how the add life insurance operation works:
+There are eight compulsory fields required for the user to input in the add life insurance command, which are: name, owner, insured, beneficiary, premium, signing date, expiry date, and contract file name.
+After the user inputs all the compulsory fields, an `AddLifeInsuranceCommandParser` is in charge of parsing the fields and constructing a `LifeInsurance` object. During the construction, the `UUID` field of the `LifeInsurance` object is assigned with a unique id.
+This `LifeInsurance` object is then passed into the  `AddLifeInsuranceCommand` for construction.
+
+The following sequence diagram shows how the execution of add life insurance command works:
 
 image::AddLifeInsuranceCommandSequenceDiagram.png[width="800"]
 
-There are eight compulsory fields required for the user to input in the add life insurance command.
-They are: name, owner, insured, beneficiary, premium, signing date, expiry date, and contract file name.
+_Figure 3.11.1 : Sequence Diagram of the Add Life Insurance Command_
 
-
+According to the sequence diagram, when `AddLifeInsuranceCommand` is executed from the `LogicManager` (the green arrow), it first gets a filtered person list from the  `ModelManager`.
+This list is then passed into the `isAnyPersonInList(personList, toAdd)` during self-invocation.
+This method iterates through the entire person list to check if any `Name` field of the `Person` objects matches the `Name` field of the three `InsurancePerson` objects in this `LifeInsurance`.
+If a match occurs, it sets the `Person` field of the `InsurancePerson` object to the corresponding `Person` object inside the list.
+The method is implemented in the following way:
 
 [source,java]
 ----
@@ -1015,6 +1022,14 @@ private void isAnyPersonInList(List<ReadOnlyPerson> list, LifeInsurance lifeInsu
     }
 }
 ----
+
+[NOTE]
+If the `Name` field of an `InsurancePerson` object does not match with any `Name` field of `Person` objects in the list,
+the `Person` field will remain unassigned. This means the user specified a person name that does not exist in LISA when adding a life insurance.
+Such case is properly handled in the `UI` rendering and will not result in an exception.
+
+After populating the `Person` fields of the three `InsurancePerson` objects, the `LifeInsurance` is passed to `AddressBook` and put into to the `UniqueLifeInsuranceMap`.
+A self-invocation of an AddressBook then synchronizes the `UniqueLifeInsuranceMap` and `UniquePersonList` with the newly added `LifeInsurance`.
 
 ==== Design Considerations
 
