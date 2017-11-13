@@ -421,7 +421,7 @@ public class InsuranceClickedEvent extends BaseEvent {
             PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DOB, PREFIX_GENDER));
     public static final Set<Prefix> PREFIXES_INSURANCE = new LinkedHashSet<>(Arrays.asList(
             PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY,
-            PREFIX_PREMIUM, PREFIX_CONTRACT_FILE_NAME, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE));
+            PREFIX_PREMIUM, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE, PREFIX_CONTRACT_FILE_NAME));
 }
 ```
 ###### \java\seedu\address\logic\parser\DateParser.java
@@ -910,10 +910,12 @@ public class MissingPrefixException extends ParseException {
 ###### \java\seedu\address\ui\InsuranceCard.java
 ``` java
     private void setPremiumLevel(Double premium) {
-        if (premium > 500.0) {
+        insuranceName.getStyleClass().clear();
+        index.getStyleClass().clear();
+        if (premium >= GOLD_INSURANCE_PREMIUM) {
             insuranceName.getStyleClass().add("gold-insurance-header");
             index.getStyleClass().add("gold-insurance-header");
-        } else if (premium > 100.0) {
+        } else if (premium >= SILVER_INSURANCE_PREMIUM) {
             insuranceName.getStyleClass().add("silver-insurance-header");
             index.getStyleClass().add("silver-insurance-header");
         } else {
@@ -925,9 +927,10 @@ public class MissingPrefixException extends ParseException {
 ###### \java\seedu\address\ui\InsuranceIdLabel.java
 ``` java
     private void setPremiumLevel(Double premium) {
-        if (premium > 500.0) {
+        insuranceId.getStyleClass().clear();
+        if (premium >= GOLD_INSURANCE_PREMIUM) {
             insuranceId.getStyleClass().add("gold-insurance-header");
-        } else if (premium > 100.0) {
+        } else if (premium >= SILVER_INSURANCE_PREMIUM) {
             insuranceId.getStyleClass().add("silver-insurance-header");
         } else {
             insuranceId.getStyleClass().add("normal-insurance-header");
@@ -982,7 +985,12 @@ public class MissingPrefixException extends ParseException {
 public class InsuranceProfilePanel extends UiPart<Region> {
     private static final String FXML = "InsuranceProfilePanel.fxml";
     private static final String PDFFOLDERPATH = "data/";
+    private static final Double GOLD_INSURANCE_PREMIUM = 2500.0;
+    private static final Double SILVER_INSURANCE_PREMIUM = 1500.0;
+    private static final String PDF_FOLDER_PATH = "data/";
+    private static final String PDF_EXTENSION = ".pdf";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
 
     private File insuranceFile;
     private ReadOnlyInsurance insurance;
@@ -1006,7 +1014,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     @FXML
     private Label expiryDate;
     @FXML
-    private Label contractName;
+    private Label contractFileName;
 
     public InsuranceProfilePanel() {
         super(FXML);
@@ -1023,9 +1031,9 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     private void setPremiumLevel(Double premium) {
         insuranceName.getStyleClass().clear();
         insuranceName.getStyleClass().add("insurance-profile-header");
-        if (premium > 500.0) {
+        if (premium >= GOLD_INSURANCE_PREMIUM) {
             insuranceName.getStyleClass().add("gold-insurance-header");
-        } else if (premium > 100.0) {
+        } else if (premium >= SILVER_INSURANCE_PREMIUM) {
             insuranceName.getStyleClass().add("silver-insurance-header");
         } else {
             insuranceName.getStyleClass().add("normal-insurance-header");
@@ -1206,7 +1214,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
                               <Label fx:id="owner" styleClass="dynamic-labels" text="\$owner" />
                               <Label fx:id="insured" styleClass="dynamic-labels" text="\$insured" />
                               <Label fx:id="beneficiary" styleClass="dynamic-labels" text="\$beneficiary" />
-                              <Label fx:id="contractName" styleClass="dynamic-labels" text="\$contractName" />
+                              <Label fx:id="contractFileName" styleClass="dynamic-labels" text="\$contractName" />
                               <Label fx:id="premium" styleClass="dynamic-labels" text="\$premium" />
                               <Label fx:id="signingDate" styleClass="dynamic-labels" text="\$signingDate" />
                               <Label fx:id="expiryDate" styleClass="dynamic-labels" text="\$expiryDate" />

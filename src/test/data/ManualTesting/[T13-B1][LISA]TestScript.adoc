@@ -238,23 +238,18 @@ The commandbox textfield should once again be focused
 === Partial Find + Searchbox (The small textfield on the left, below result message and right above person list panel)
 
 Input:
-`pfind Har` +
+`pfind Ar` +
 Expected output:
-Only contacts with name starting with “Har” will be displayed on the person list panel
-eg. Harry Potter, Harvey Dent
-
-Input:
-`pfind Doe` +
-Expected output:
-0 matches (since no contact has the name starting with “Doe”). Since “John Doe” only contains and does not begin with “Doe”, his contact will not be matched.
+All contacts containing “ar” anywhere in the name, case-insensitive will be displayed on the person list panel
+eg. Harry Potter, Harvey Dent, Charlotte Oliveiro, Mary Jane, Oscar, etc.
 
 The pfind command can be triggered automatically by typing the keywords into the searchbox, omitting the `pfind`
 
 Input:
 `Har Jo` +
 Expected output:
-Contacts with name starting with “Har” and “Jo” will be displayed on the person list panel +
-Eg. Harry Potter, Harvey Dent, John Doe
+Contacts containing “Har” and “Jo” anywhere in the name will be displayed on the person list panel +
+Eg. Harry Potter, Harvey Dent, John Doe, etc.
 
 === Select
 
