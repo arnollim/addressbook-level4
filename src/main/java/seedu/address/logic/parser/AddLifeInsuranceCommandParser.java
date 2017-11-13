@@ -70,7 +70,7 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
     }
 
     /**
-     * Returns true if the name prefixes does not contain empty {@code Optional} values in the given
+     * Returns true if the all prefixes does not contain empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
      */
     private static boolean arePrefixesPresentAndFilled(ArgumentMultimap argumentMultimap, Prefix... prefixes) {

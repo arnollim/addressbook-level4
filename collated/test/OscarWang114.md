@@ -492,12 +492,14 @@ public class LifeInsuranceBuilder {
         assertCommandSuccess(command, AMY_NO_PHONE);
 
         /* Case: missing email -> added */
+        executeCommand(CLEAR_COMMAND);
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + ADDRESS_DESC_AMY + DOB_DESC_AMY
                 + GENDER_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, AMY_NO_EMAIL);
 
         /* Case: missing address -> added */
+        executeCommand(CLEAR_COMMAND);
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DOB_DESC_AMY
                 + GENDER_DESC_AMY + TAG_DESC_FRIEND;
@@ -506,6 +508,7 @@ public class LifeInsuranceBuilder {
 ###### /java/systemtests/AddCommandSystemTest.java
 ``` java
         /* Case: missing name -> rejected */
+        executeCommand(CLEAR_COMMAND);
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + GENDER_DESC_AMY + DOB_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
