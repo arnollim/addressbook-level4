@@ -40,8 +40,9 @@ public interface ThrowingConsumer<T> extends Consumer<T> {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_DOB + "DATE OF BIRTH] "
-            + "[" + PREFIX_GENDER + "GENDER] "
+```
+###### /java/seedu/address/logic/commands/AddCommand.java
+``` java
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -221,8 +222,8 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
                 new AddPersonOptionalFieldDescriptor();
 
         try {
-            final Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            final Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE))
                 .ifPresent(addPersonOptionalFieldDescriptor::setPhone);
@@ -233,9 +234,9 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
 ```
 ###### /java/seedu/address/logic/parser/AddCommandParser.java
 ``` java
-            final Phone phone = addPersonOptionalFieldDescriptor.getPhone();
-            final Email email = addPersonOptionalFieldDescriptor.getEmail();
-            final Address address = addPersonOptionalFieldDescriptor.getAddress();
+            Phone phone = addPersonOptionalFieldDescriptor.getPhone();
+            Email email = addPersonOptionalFieldDescriptor.getEmail();
+            Address address = addPersonOptionalFieldDescriptor.getAddress();
             ReadOnlyPerson person = new Person(name, phone, email, address, dob, gender, tagList);
 
             return new AddCommand(person);
@@ -278,16 +279,16 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
         }
 
         try {
-            final InsuranceName insuranceName = ParserUtil.parseInsuranceName(argMultimap.getValue(PREFIX_NAME)).get();
-            final InsurancePerson owner = ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_OWNER)).get();
-            final InsurancePerson insured = ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_INSURED)).get();
-            final InsurancePerson beneficiary =
+            InsuranceName insuranceName = ParserUtil.parseInsuranceName(argMultimap.getValue(PREFIX_NAME)).get();
+            InsurancePerson owner = ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_OWNER)).get();
+            InsurancePerson insured = ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_INSURED)).get();
+            InsurancePerson beneficiary =
                     ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_BENEFICIARY)).get();
-            final Premium premium = ParserUtil.parsePremium(argMultimap.getValue(PREFIX_PREMIUM)).get();
-            final ContractFileName contractFileName =
+            Premium premium = ParserUtil.parsePremium(argMultimap.getValue(PREFIX_PREMIUM)).get();
+            ContractFileName contractFileName =
                     ParserUtil.parseContractFileName(argMultimap.getValue(PREFIX_CONTRACT_FILE_NAME)).get();
-            final LocalDate signingDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_SIGNING_DATE)).get();
-            final LocalDate expiryDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get();
+            LocalDate signingDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_SIGNING_DATE)).get();
+            LocalDate expiryDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get();
 
             ReadOnlyInsurance lifeInsurance = new LifeInsurance(insuranceName, owner, insured, beneficiary, premium,
                     contractFileName, signingDate, expiryDate);
@@ -299,7 +300,7 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
     }
 
     /**
-     * Returns true if the name prefixes does not contain empty {@code Optional} values in the given
+     * Returns true if the all prefixes does not contain empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
      */
     private static boolean arePrefixesPresentAndFilled(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
@@ -361,6 +362,12 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
 ```
 ###### /java/seedu/address/model/AddressBook.java
 ``` java
+    /**
+     * Sets the lifeInsuranceMap to the given map.
+     *
+     * @throws DuplicateInsuranceException if duplicate insurances is found in the map.
+     * @throws DuplicateContractFileNameException if duplicate contract file names is found in the map.
+     */
     public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
         this.lifeInsuranceMap.setInsurances(insurances);
@@ -381,12 +388,16 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
 ###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
-     *Adds an insurance to the address book.
+     *Adds a life insurance to LISA.
+     *@throws DuplicateInsuranceException if there is a another equivalent life insurance in the map.
+     *@throws DuplicateContractFileNameException if the {@code contractFileName} field of {@code toAdd} equals to
+     * another life insurance in the map.
      */
-    public void addInsurance(ReadOnlyInsurance i)
+    public void addLifeInsurance(ReadOnlyInsurance toAdd)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
-        LifeInsurance lifeInsurance = new LifeInsurance(i);
-        lifeInsuranceMap.put(lifeInsurance.getId(), lifeInsurance);
+        LifeInsurance lifeInsurance = new LifeInsurance(toAdd);
+        UUID id = lifeInsurance.getId();
+        lifeInsuranceMap.put(id, lifeInsurance);
         syncWithUpdate();
     }
 ```
@@ -840,6 +851,8 @@ public class UniqueLifeInsuranceMap {
      *
      * @throws DuplicateInsuranceException if the life insurance to add is a duplicate of an
      * existing life insurance in the map.
+     * @throws DuplicateContractFileNameException if a duplicate of the contract file name field of the life insurance
+     * to add exists in the map.
      */
     public void put(UUID key, ReadOnlyInsurance toPut)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
@@ -885,12 +898,24 @@ public class UniqueLifeInsuranceMap {
         internalMap.forEach(action);
     }
 
+    /**
+     * Sets the internal map to the given {@code UniqueLifeInsuranceMap} replacement.
+     *
+     * @throws DuplicateInsuranceException if duplicate insurances is found in the map.
+     * @throws DuplicateContractFileNameException if duplicate contract file names is found in the map.
+     */
     public void setInsurances(UniqueLifeInsuranceMap replacement) {
         this.internalMap.clear();
         this.internalMap.putAll(replacement.internalMap);
         syncMappedListWithInternalMap();
     }
 
+    /**
+     * Sets the internal map to the given map.
+     *
+     * @throws DuplicateInsuranceException if duplicate insurances is found in the map.
+     * @throws DuplicateContractFileNameException if duplicate contract file names is found in the map.
+     */
     public void setInsurances(Map<UUID, ? extends ReadOnlyInsurance> insurances)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
         final UniqueLifeInsuranceMap replacement = new UniqueLifeInsuranceMap();
@@ -947,7 +972,7 @@ public class UniqueLifeInsuranceMap {
     @Override
     public synchronized void addLifeInsurance(ReadOnlyInsurance insurance)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
-        addressBook.addInsurance(insurance);
+        addressBook.addLifeInsurance(insurance);
         updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
         indicateAddressBookChanged();
     }
@@ -1293,6 +1318,8 @@ public class InsuranceCard extends UiPart<Region> {
 
 
     private static final String FXML = "InsuranceCard.fxml";
+    private static final Double GOLD_INSURANCE_PREMIUM = 2500.0;
+    private static final Double SILVER_INSURANCE_PREMIUM = 1500.0;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private File insuranceFile;

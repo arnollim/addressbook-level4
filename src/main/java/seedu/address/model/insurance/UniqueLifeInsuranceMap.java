@@ -61,6 +61,8 @@ public class UniqueLifeInsuranceMap {
      *
      * @throws DuplicateInsuranceException if the life insurance to add is a duplicate of an
      * existing life insurance in the map.
+     * @throws DuplicateContractFileNameException if a duplicate of the contract file name field of the life insurance
+     * to add exists in the map.
      */
     public void put(UUID key, ReadOnlyInsurance toPut)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
@@ -106,12 +108,24 @@ public class UniqueLifeInsuranceMap {
         internalMap.forEach(action);
     }
 
+    /**
+     * Sets the internal map to the given {@code UniqueLifeInsuranceMap} replacement.
+     *
+     * @throws DuplicateInsuranceException if duplicate insurances is found in the map.
+     * @throws DuplicateContractFileNameException if duplicate contract file names is found in the map.
+     */
     public void setInsurances(UniqueLifeInsuranceMap replacement) {
         this.internalMap.clear();
         this.internalMap.putAll(replacement.internalMap);
         syncMappedListWithInternalMap();
     }
 
+    /**
+     * Sets the internal map to the given map.
+     *
+     * @throws DuplicateInsuranceException if duplicate insurances is found in the map.
+     * @throws DuplicateContractFileNameException if duplicate contract file names is found in the map.
+     */
     public void setInsurances(Map<UUID, ? extends ReadOnlyInsurance> insurances)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
         final UniqueLifeInsuranceMap replacement = new UniqueLifeInsuranceMap();
