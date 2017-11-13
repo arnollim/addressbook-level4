@@ -23,6 +23,8 @@ public class InsuranceCard extends UiPart<Region> {
 
 
     private static final String FXML = "InsuranceCard.fxml";
+    private static final Double GOLD_INSURANCE_PREMIUM = 2500.0;
+    private static final Double SILVER_INSURANCE_PREMIUM = 1500.0;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private File insuranceFile;
@@ -58,7 +60,7 @@ public class InsuranceCard extends UiPart<Region> {
         enableNameToProfileLink(insurance);
 
         bindListeners(insurance);
-        setPremiumLevel(insurance.getPremium());
+        setPremiumLevel(insurance.getPremium().toDouble());
     }
 
     public ReadOnlyInsurance getInsurance() {
@@ -86,15 +88,19 @@ public class InsuranceCard extends UiPart<Region> {
         owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
-        premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
+        premium.textProperty().bind(Bindings.convert(insurance.premiumProperty()));
     }
 
     //@@author Juxarius
     private void setPremiumLevel(Double premium) {
-        if (premium > 500.0) {
+        insuranceName.getStyleClass().clear();
+        insuranceName.getStyleClass().add("insurance-header");
+        index.getStyleClass().clear();
+        index.getStyleClass().add("insurance-header");
+        if (premium >= GOLD_INSURANCE_PREMIUM) {
             insuranceName.getStyleClass().add("gold-insurance-header");
             index.getStyleClass().add("gold-insurance-header");
-        } else if (premium > 100.0) {
+        } else if (premium >= SILVER_INSURANCE_PREMIUM) {
             insuranceName.getStyleClass().add("silver-insurance-header");
             index.getStyleClass().add("silver-insurance-header");
         } else {

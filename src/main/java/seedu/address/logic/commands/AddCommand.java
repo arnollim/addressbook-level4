@@ -35,8 +35,11 @@ public class AddCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            //@@author Pujitha97
             + "[" + PREFIX_DOB + "DATE OF BIRTH] "
             + "[" + PREFIX_GENDER + "GENDER] "
+            //@@author
+            //@@author OscarWang114
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -114,14 +117,14 @@ public class AddCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
-        private DateOfBirth dateofbirth;
+        private DateOfBirth dateOfBirth;
         private Gender gender;
 
         public AddPersonOptionalFieldDescriptor() {
             this.phone = new Phone();
             this.email = new Email();
             this.address = new Address();
-            this.dateofbirth = new DateOfBirth();
+            this.dateOfBirth = new DateOfBirth();
             this.gender = new Gender();
         }
 
@@ -150,11 +153,11 @@ public class AddCommand extends UndoableCommand {
         }
         //@@author Pujitha97
         public void setDateOfBirth(DateOfBirth dateofbirth) {
-            this.dateofbirth = dateofbirth;
+            this.dateOfBirth = dateofbirth;
         }
 
         public DateOfBirth getDateOfBirth() {
-            return dateofbirth;
+            return dateOfBirth;
         }
 
         public void setGender(Gender gender) {
