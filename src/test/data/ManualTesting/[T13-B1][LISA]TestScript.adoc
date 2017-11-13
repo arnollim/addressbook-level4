@@ -1,6 +1,7 @@
 = LISA Test Script
 :toc:
 :sectnums:
+:stylesDir: stylesheets
 
 == Load Sample data
 
