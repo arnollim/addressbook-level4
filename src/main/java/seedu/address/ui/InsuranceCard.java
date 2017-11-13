@@ -94,7 +94,9 @@ public class InsuranceCard extends UiPart<Region> {
     //@@author Juxarius
     private void setPremiumLevel(Double premium) {
         insuranceName.getStyleClass().clear();
+        insuranceName.getStyleClass().add("insurance-header");
         index.getStyleClass().clear();
+        index.getStyleClass().add("insurance-header");
         if (premium >= GOLD_INSURANCE_PREMIUM) {
             insuranceName.getStyleClass().add("gold-insurance-header");
             index.getStyleClass().add("gold-insurance-header");
