@@ -71,6 +71,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author OscarWang114
+    /**
+     * Sets the lifeInsuranceMap to the given map.
+     *
+     * @throws DuplicateInsuranceException if duplicate insurances is found in the map.
+     * @throws DuplicateContractFileNameException if duplicate contract file names is found in the map.
+     */
     public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
         this.lifeInsuranceMap.setInsurances(insurances);
