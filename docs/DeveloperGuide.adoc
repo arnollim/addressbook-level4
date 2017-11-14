@@ -245,7 +245,7 @@ A brute force approach is applied where the `commandWord` is compared against ev
 // tag::prefixAutofill[]
 === Prefix Autofill
 
-When adding a new insurance, all fields are require as a contract needs to be complete before it is valid.
+When adding a new insurance, all fields are required as a contract needs to be complete before it is valid.
 However, due to the multitude of information required, users should have the convenience of
 pressing enter with an unfilled command to trigger the autofill to prompt you with the prefixes
 required and move the the caret to the next field.
@@ -401,12 +401,13 @@ contacts with empty fields no longer prevent the autofilling of other empty pref
 the `EmptyFieldException` is no longer unique to the empty prefix and thus, there is no need for the prefix parameter,
 which is removed from the constructor of the exception.
 // end::autofill[]
+
 // tag::add[]
 === Making NAME the only compulsory field in Add Command
 
 The `add` command follows the format below:
 
-`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...`
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [g/GENDER] [t/TAG]...`
 
 This means when adding a new person in LISA, the user only needs to provide value for the compulsory `NAME` field. Every other field is optional.
 
@@ -447,7 +448,7 @@ public Phone() {
 }
 ----
 
-The logic provided above can be applied to other optional fields, namely `[p/PHONE_NUMBER]`, `[e/EMAIL]`, `[a/ADDRESS]`, and `[d/DATE_OF_BIRTH]`.
+The logic provided above can be applied to other optional fields, namely `[p/PHONE_NUMBER]`, `[e/EMAIL]`, `[a/ADDRESS]`, `[g/GENDER]` and `[d/DATE_OF_BIRTH]`.
 `[t/TAG]...` uses a different implementation and will not be covered in this section.
 
 Due to this implementation, the field attribute of a `Person` object can never be `null`.
@@ -599,7 +600,7 @@ Therefore, in the above example, `"m"` is passed as the argument.
 As can be seen from the above code snippet , the given argument is converted to lower case and then given a value amongst
 the available enumerated constants : FEMALE , MALE and NOT_SPECIFIED (when no gender is specified)
 
-The genderset variable is specified to know if the user has entered the gender of the entry
+The `genderset` variable is specified to know if the user has entered the gender of the entry
 or not. If not , instead of displaying the default enum type :NOT_SPECIFIED , we can display
 a blank string. If specified , we can display the actual gender of the entry in a string format.
 
@@ -676,11 +677,12 @@ image::AfterAddingKelvin.png["width="800"]
 // tag::tagManagement[]
 === Improved Tag Management
 
-The original tag system management with the edit function have several difficulties which cause the user to too much trouble,
- inconvenience and inefficiency in managing their tags. This is mainly due to how the editing of a tag works. When using the
+The original tag system management within the edit function has several difficulties
+which cause the user inconvenience and inefficiency in managing
+their tags. This is mainly due to how the editing of a tag works. When using the
  edit function, just like how entering a new name will replace the existing name,
- using the tag prefix to add tags on to a user will end up overwriting all the existing tags and replace it
- with the new tag(s). For example, entering the `edit 1 t/Awesome` results in the following: +
+ using the tag prefix to add tags to a user will end up overwriting all the existing tags
+  and replace it with the new tag(s). For example, entering the `edit 1 t/Awesome` results in the following: +
 Command entered:
 
 image::addtagui.jpg[]
@@ -823,20 +825,228 @@ The rest of the execution then, follows closely to the case where the command is
 === Reading and Storing Life Insurances:
 `since v1.3`
 
-TBA
+image::LifeInsuranceClassDiagram.png[width="800"]
+_Figure 3.10.1 : Structure of the Components related to LifeInsurance_
+
+The `LifeInsurance`,
+
+* represents a life insurance in LISA.
+
+Fields inside a `LifeInsurance`:
+
+* `UUID` represents a unique id of the life insurance.
+* `InsuranceName` represents the name of the life insurance.
+* `Roles` is a `enum` type that represents the three person roles in a life insurance.
+Namely owner, insured, and beneficiary.
+* `EnumMap` maps a person role in a life insurance to the name of the corresponding person.
+* `InsurancePerson` represents a person in a life insurance. There are three such fields - owner, insured, and beneficiary  in a life insurance.
+* `Premium` represents the premium of a life insurance.
+* `ContractFileName` represents the name of a digital contract file (e.g. AlexYeohTermLife.pdf, BerniceYuWholeLife.docx) of a life insurance.
+* `LocalDate` represents the date components of a life insurance.
+There are two such fields - signing date and expiry date in a life insurance.
+
+
+The `UniqueLifeInsuranceMap`,
+
+* stores all `LifeInsurance` objects in LISA.
+* maps a `UUID` key to a `LifeInsurance` value.
+* exposes an unmodifiable `ObservableList<ReadOnlyInsurance>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+[NOTE]
+The `UUID` key inside the map has the same value with the `UUID` field inside the `LifeInsurance` it maps to.
+
+The `List<UUID>`,
+
+* stores all the `UUID` objects of the life insurances a `Person` object is involved.
+A person is involved in a life insurance if he/she is an owner, insured, or beneficiary of that piece of life insurance.
+* prevents storing duplicate ids, e.g., even if a person is both an owner and insured of a life insurance, `List<UUID>` will only store a single copy of the `UUID` of that life insurance.
+
+The `UniqueLifeInsuranceList`,
+
+* stores all the `LifeInsurance` objects  a `Person` object is involved.
+A person is involved in a life insurance if he/she is an owner, insured, or beneficiary of that piece of life insurance.
+* prevents storing duplicate life insurances, e.g., even if a person is both an owner and insured of a life insurance, `UniqueLifeInsuranceList` will only store a single copy of that life insurance.
+
+
+image::XmlAdaptedLifeInsuranceClassDiagram.png[width="800"]
+_Figure 3.10.2 : Structure of the Components related to XmlAdaptedLifeInsurance_
+
+The `XmlAdaptedLifeInsurance`
+
+* represents a JAXB-friendly version of the `LifeInsurance`.
+* follows the format below when saved in xml format:
+
+[source,xml]
+----
+<id>ad4dc852-e6bb-44e9-800e-fa8a8964e7f1</id>
+<insuranceName>Sample Life Insurance</insuranceName>
+<owner>Oscar Wang</owner>
+<insured>Oscar Wang</insured>
+<beneficiary>John Doe</beneficiary>
+<premium>1000.0</premium>
+<contractFileName>SampleOscarWang.pdf</contractFileName>
+<signingDate>01 Nov 2017</signingDate>
+<expiryDate>01 Nov 2047</expiryDate>
+----
+
+The `Map<String, XmlAdaptedLifeInsurance>`,
+
+* stores all `XmlAdaptedLifeInsurance` objects.
+* maps a `String` key to a `XmlAdaptedLifeInsurance` value.
+[NOTE]
+The `String` key inside the map has the same value with the `String` field inside the `XmlAdaptedLifeInsurance` it maps to.
+* follows the format below when saved in xml format:
+
+[source,xml]
+----
+<lifeInsuranceMap>
+    <entry>
+        <key>ad4dc852-e6bb-44e9-800e-fa8a8964e7f1</key>
+        <value>
+            <!-- XmlAdaptedLifeInsurance -->
+        </value>
+    </entry>
+    <!-- more entries -->
+</lifeInsuranceMap>
+----
+
+==== Synchronizing Life Insurances with Persons
+
+Inside `Addressbook.java` there are two methods in charge of keeping the life insurance master map `UniqueLifeInsuranceMap` and person master list `UniquePersonList` synchronized with each other.
+The first method, according to execution order, is `syncMasterLifeInsuranceMapWith(UniquePersonList persons)` and the
+second method is `syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap)`
+
+The first method ensures that the three `InsurancePerson` objects (owner, insured, and beneficiary) of every `LifeInsurance` in the master map links to its corresponding `Person` object if it exists in the persons list.
+In addition, it also populates the list of insurance ids `List<UUID>` in every `Person` object with id of the life insurance he/her is involved in.
+It is implemented in the following way:
+
+[source,java]
+----
+public void syncMasterLifeInsuranceMapWith(UniquePersonList persons) {
+    clearAllPersonsInsuranceIds();
+    lifeInsuranceMap.forEach((id, insurance) -> {
+        insurance.resetAllInsurancePersons();
+
+        String owner = insurance.getOwnerName();
+        // ... similar logic for insured and beneficiary...
+        persons.forEach(person -> {
+            if (person.getName().toString().equals(owner)) {
+                insurance.setOwner(new InsurancePerson(person));
+                person.addLifeInsuranceIds(id);
+            }
+            // ... similar logic for insured and beneficiary...
+        });
+    });
+    lifeInsuranceMap.syncMappedListWithInternalMap();
+}
+----
+
+[NOTE]
+The method `syncMappedListWithInternalMap()` in the last line is used to synchronize the internal list of `LifeInsurances` inside `UniqueLifeInsuranceMap`.
+This internal list is used for exposing an `ObservableList<ReadOnlyInsurance>` to the UI for binding.
+
+[NOTE]
+Because `Person` objects are identified by `Name` and stored in a list,
+for every `LifeInsurance` object we have to iterate through the entire list of persons to check if the name of the `Person` object matches with the name of the three `InsurancePerson` objects.
+
+The second method ensures that every `Person` in the master list contains the correct list of `LifeInsurance` objects corresponding to his/her list of insurance ids `List<UUID>`.
+It is implemented in the following way:
+
+[source,java]
+----
+public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) throws InsuranceNotFoundException {
+    persons.forEach((ThrowingConsumer<Person>) person -> {
+        List<UUID> idList = person.getLifeInsuranceIds();
+        if (!idList.isEmpty()) {
+            person.clearLifeInsurances();
+            idList.forEach((ThrowingConsumer<UUID>) id -> {
+                LifeInsurance lf = lifeInsuranceMap.get(id);
+                person.addLifeInsurances(lf);
+            });
+        }
+    });
+}
+----
+
+[NOTE]
+Because `LifeInsurance` objects are identified by `UUID` and stored in a map,
+for every `Person` object can simply retrieve the `LifeInsurance` he/she is involved by providing the id rather than iterating through the entire map.
+
+The two methods above are grouped into a method called `synWithUpdate()`, which is called every time when
+an operation related to `LifeInsurance` or `Person` in is executed, e.g. `addPerson(ReadOnlyPerson p)`, `deleteInsurance(ReadOnlyInsurance target)`.
+
+==== Design Considerations
+
+**Aspect:** Data structure for storing and saving life insurances in xml format: +
+**Alternative 1 (current choice):** Use a map to store ids as keys and life insurances as values. +
+**Pros:** Provides efficient O(1) data access using the id. +
+**Cons:** Requires an internal list to provide an `ObservableList<ReadOnlyInsurance>` to the UI for binding.
+The internal list have to be synchronized when data in the map changes. +
+**Alternative 2:** Use a list to store all `LifeInsurances`. +
+**Pros:** Does not require internal list. Easier implementation. +
+**Cons:** Less efficient data access. Requires iterating through the entire list to search for a life insurance using id.
+
+---
 // end::li[]
 
 // tag::addli[]
 === Add Life Insurance Command:
 `since v1.4`
 
-TBA
+There are eight compulsory fields required for the user to input in the add life insurance command, which are: name, owner, insured, beneficiary, premium, signing date, expiry date, and contract file name.
+After the user inputs all the compulsory fields, an `AddLifeInsuranceCommandParser` is in charge of parsing the fields and constructing a `LifeInsurance` object. During the construction, the `UUID` field of the `LifeInsurance` object is assigned with a unique id.
+This `LifeInsurance` object is then passed into the  `AddLifeInsuranceCommand` for construction.
+
+The following sequence diagram shows how the execution of add life insurance command works:
+
+image::AddLifeInsuranceCommandSequenceDiagram.png[width="800"]
+
+_Figure 3.11.1 : Sequence Diagram of the Add Life Insurance Command_
+
+According to the sequence diagram, when `AddLifeInsuranceCommand` is executed from the `LogicManager` (the green arrow), it first gets a filtered person list from the  `ModelManager`.
+This list is then passed into the `isAnyPersonInList(personList, toAdd)` during self-invocation.
+This method iterates through the entire person list to check if any `Name` field of the `Person` objects matches the `Name` field of the three `InsurancePerson` objects in this `LifeInsurance`.
+If a match occurs, it sets the `Person` field of the `InsurancePerson` object to the corresponding `Person` object inside the list.
+The method is implemented in the following way:
+
+[source,java]
+----
+private void isAnyPersonInList(List<ReadOnlyPerson> list, LifeInsurance lifeInsurance) {
+    String ownerName = lifeInsurance.getOwner().getName();
+    // ... similar logic for insured and beneficiary...
+    for (ReadOnlyPerson person: list) {
+        String lowerCaseName = person.getName().toString().toLowerCase();
+        if (lowerCaseName.equals(ownerName)) {
+            lifeInsurance.setOwner(new InsurancePerson(person));
+        }
+        // ... similar logic for insured and beneficiary...
+    }
+}
+----
+
+[NOTE]
+If the `Name` field of an `InsurancePerson` object does not match with any `Name` field of `Person` objects in the list,
+the `Person` field will remain unassigned. This means the user specified a person name that does not exist in LISA when adding a life insurance.
+Such case is properly handled in the `UI` rendering and will not result in an exception.
+
+After populating the `Person` fields of the three `InsurancePerson` objects, the `LifeInsurance` is passed to `AddressBook` and put into to the `UniqueLifeInsuranceMap`.
+A self-invocation of an AddressBook then synchronizes the `UniqueLifeInsuranceMap` and `UniquePersonList` with the newly added `LifeInsurance`.
+
+==== Design Considerations
+
+**Aspect:** Number of fields required from the user input: +
+**Alternative 1 (current choice):** Every field must be provided. +
+**Pros:** Ensures no field with null or empty value exists in a `LifeInsurance` object. +
+**Cons:** Not user-friendly. The user needs to fill in every field every time.
+**Alternative 2:** Making the name field the only compulsory field. The rest can be not provided. +
+**Pros:** More flexibility and user-friendly. +
+**Cons:** Requires good handling of null or empty values. In addition, an edit life insurance command has to be created to allow users to update the unfilled fields.
+
 // end::addli[]
 
 
 // tag::print[]
 === Addition of Print Command
-The print command enables the user to save his/her addressbook into a printable .txt file
+The print command enables the user to save his/her addressbook in the form of a printable .txt file
 
 The print command has the following format:
 print [FILENAME]
@@ -945,26 +1155,45 @@ A fun, interesting easter egg feature for the user to play with in LISA.
 [source,java]
 ----
     public String getReason() {
-        Address address = this.getAddress();
-        Name name = this.getName();
-        Email email = this.getEmail();
-        DateOfBirth dob = this.getDateOfBirth();
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(3);
-        if (randomInt == 0) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
-        } else if (randomInt == 1) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
-        } else if (randomInt == 2) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+            Address address = this.getAddress();
+            Name name = this.getName();
+            Email email = this.getEmail();
+            DateOfBirth dob = this.getDateOfBirth();
+            Random randomGenerator = new Random();
+            int randomInt = randomGenerator.nextInt(6);
+            if (randomInt == 0) {
+                if (address.toString() == "") {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_NO_ADDRESS, name);
+                } else {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
+                }
+            } else if (randomInt == 1) {
+                if (dob.toString() == "") {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_NO_DOB, name);
+                } else {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
+                }
+            } else if (randomInt == 2) {
+                if (email.value == "") {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_NO_EMAIL, name);
+                } else {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+                }
+            } else if (randomInt == 3) {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_4, name);
+            } else if (randomInt == 4) {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_5, name);
+            } else if (randomInt == 5) {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_6, name);
+            }
+            return reason;
         }
-        return reason;
-    }
 ----
 Why command takes in the index of a person, for e.g. why 1. The command parser then parses the index
 (in a similar way to edit) and runs through a random "reason" generator in getReason() in Person.java.
-For if 1, 2 or 3 is generated by randomGenerator.nextInt(3),  then the persons address, dob or email will
-be returned respectively, for example, "Because John Doe lives in Clementi Ave 2".
+For if 1, 2 or 3 is generated by randomGenerator.nextInt(5),  then the persons address, dob or email will
+be returned respectively, for example, "Because John Doe lives in Clementi Ave 2". For 4, 5 and 6, other interesting
+messages will be printed, such as "Because John Doe appreciates you".
 //end::why[]
 
 // tag::pdfSaveLoad[]
@@ -972,7 +1201,7 @@ be returned respectively, for example, "Because John Doe lives in Clementi Ave 2
 
 Allows for pdf file of the contract to be added to the project, and accessed by clicking on the link on insurance profile page.
 
-image::contractPdf.png[]
+image::contractPdf.png[width="380"]
 
 If file is not detected in the project folder (data folder), filechooser will popup to allow user to add the pdf file into the project. Regardless of the name of the file chosen, it will automatically be renamed to the name specified in the insurance profile.
 
@@ -1243,6 +1472,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 
+// tag::undoredoEnhance[]
 ==== Enhancement: Undone/Redone Command as feedback in addition to Success Message
 `v1.5 Implementation`
 Each undoable command class (AddCommand, DeleteCommand, ClearCommand, EditCommand) will have and overriden ToString()
@@ -1289,6 +1519,7 @@ After obtaining the command string, the popping of the undoable command from the
 
         return new CommandResult(feedbackToUser);
 ----
+// end::undoredoEnhance[]
 
 // end::undoredo[]
 
@@ -1668,11 +1899,22 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
+
+|`* * *` |insurance agent | add an insurance | manage my clients according to the insurances they purchased
+
+|`* * *` |insurance agent | delete an insurance | remove entries that I no longer needed
+
+|`* * *` |insurance agent | link an insurance to a digital contract file| have a digital copy reference
+
+|`* * *` |user | export my contacts as a printable file| have a hard copy reference
+
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |Include gender as a field in record entry|
 
 |`* * *` |user |Include date of birth as a field in record entry|
 
-|`* * *` |user |add a new person by providing only his/her name|
+|`* * *` |user |add a new person by providing only his/her name| edit and provide the details later on
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
@@ -1709,6 +1951,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user | check last modified date for a contact| identify possible outdated contacts
 
 |`*` |lazy user| create an email by clicking on email address on person card| send email on the fly
+
+|`*` |prudent user| confirm what command I am undo-ing or redo-ing when I excecute the undo/redo command| do not make unintentional changes
+
+|`*` |efficient user | have my contact list sorted in alphabetical order| have a well ordered list of contacts in LISA or in the printed address book.
+
+|`*` |user | have interesting Easter Egg features| have some fun with the application
 
 
 |=======================================================================

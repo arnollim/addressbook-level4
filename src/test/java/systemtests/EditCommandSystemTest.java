@@ -8,11 +8,13 @@ import static seedu.address.logic.commands.CommandTestUtil.DELTAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.GENDER_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DOB_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_GENDER_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
@@ -21,6 +23,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DOB_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_GENDER_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -48,6 +51,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.AddressBookParser;
+import seedu.address.logic.parser.DateParser;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.person.Email;
@@ -183,9 +187,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_AMY;
         personToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
-        editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_BOB).build();
+        editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_AMY).build();
         assertCommandSuccess(command, index, editedPerson);
 
         /* Case: filtered person list, edit index within bounds of address book but out of bounds of person list
@@ -245,6 +249,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_EMAIL_DESC,
                 Email.MESSAGE_EMAIL_CONSTRAINTS);
         //@@author Pujitha97
+        /* Case: invalid DOB -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_DOB_DESC,
+                DateParser.MESSAGE_INVALID_MONTH);
         /* Case: invalid gender -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_GENDER_DESC,
                 Gender.MESSAGE_GENDER_CONSTRAINTS);

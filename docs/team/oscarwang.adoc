@@ -47,7 +47,7 @@ include::../DeveloperGuide.adoc[tag=add]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=li]
+This enhancement does not contain external behavior that a user should know.
 
 #End of Extract#
 
@@ -55,7 +55,7 @@ include::../UserGuide.adoc[tag=li]
 
 ==== Justification
 
-This feature serves as a precursor of the implementation for the user story: As an insurance agent, I can specify the provider-client relationship among my contacts.
+This feature serves as a precursor of the implementation for the user story: As an insurance agent, I can add an insurance to manage my clients according to the insurances they purchased.
 
 
 ==== Implementation
@@ -84,8 +84,8 @@ include::../UserGuide.adoc[tag=addli]
 
 ==== Justification
 
-This feature is an implementation of the user story: As an insurance agent, I can specify the provider-client relationship among my contacts.
-It is crucial for LISA to allow insurance agents to create insurances, a provider-client relationship in the contacts.
+This feature is an implementation of the user story: As an insurance agent, I can add an insurance to manage my clients according to the insurances they purchased.
+Therefore, it is crucial for LISA to allow insurance agents to add life insurances.
 
 ==== Implementation
 
